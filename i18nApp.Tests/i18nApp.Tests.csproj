@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{534CCAC4-B89E-41BA-B75C-93BB1B7C473B}</ProjectGuid>
+    <ProjectGuid>{9F67E3FB-A744-47DB-B0C2-D28A2C4379A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>i18nApp.Tests</RootNamespace>
@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\i18nApp\i18nApp.csproj">
-      <Project>{E517356A-4E78-4BA4-AD55-A25844B3792C}</Project>
+      <Project>{439ECF14-4064-49E1-A2AB-F22C39BAF620}</Project>
       <Name>i18nApp</Name>
     </ProjectReference>
   </ItemGroup>
