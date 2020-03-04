@@ -124,13 +124,34 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\I18nAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource\Home\Index\I18n.Designer.cs">
+    <Compile Include="Resources\Home\Contact\I18n.Designer.cs">
+      <DependentUpon>I18n.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Home\Contact\I18n.en.Designer.cs">
+      <DependentUpon>I18n.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Home\About\I18n.en.Designer.cs">
+      <DependentUpon>I18n.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Home\About\I18n.Designer.cs">
+      <DependentUpon>I18n.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Home\Index\I18n.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>I18n.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resource\Home\Index\I18n.en.Designer.cs">
+    <Compile Include="Resources\Home\Index\I18n.en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>I18n.en.resx</DependentUpon>
@@ -191,11 +212,27 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resource\Home\Index\I18n.en.resx">
+    <EmbeddedResource Include="Resources\Home\Contact\I18n.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>I18n.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resource\Home\Index\I18n.resx">
+    <EmbeddedResource Include="Resources\Home\Contact\I18n.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home\About\I18n.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18n.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home\About\I18n.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18n.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home\Index\I18n.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>I18n.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Home\Index\I18n.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>I18n.Designer.cs</LastGenOutput>
     </EmbeddedResource>

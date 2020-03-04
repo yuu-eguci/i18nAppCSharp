@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading;
+using System.Globalization;
+using i18nApp.Helpers;
 
 namespace i18nApp.Controllers
 {
@@ -13,17 +16,28 @@ namespace i18nApp.Controllers
             return View();
         }
 
-        public ActionResult About()
+        /// <summary>
+        /// This page switches its Culture depending on the culture in the url.
+        /// NOTE: language isn't used in the method though,
+        /// it cannot be used in I18nAttribute if the argument isn't set.
+        /// HACK: Does it exist any smart solution?
+        /// </summary>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        [I18nAttribute]
+        public ActionResult About(string culture)
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        /// <summary>
+        /// Same as /Home/About above.
+        /// </summary>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        [I18nAttribute]
+        public ActionResult Contact(string culture)
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

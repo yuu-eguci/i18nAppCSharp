@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace i18nApp.Resource.Home.Index {
+namespace i18nApp.Resources.Home.Index {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace i18nApp.Resource.Home.Index {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("i18nApp.Resource.Home.Index.I18n", typeof(I18n).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("i18nApp.Resources.Home.Index.I18n", typeof(I18n).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

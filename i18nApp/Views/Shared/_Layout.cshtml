@@ -23,6 +23,24 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>
+                        @Html.ActionLink(
+                           "日本語",
+                           this.ViewContext.RouteData.Values["action"].ToString(),
+                           this.ViewContext.RouteData.Values["controller"].ToString(),
+                           new { culture = "ja" },
+                           null
+                        )
+                    </li>
+                    <li>
+                        @Html.ActionLink(
+                           "English",
+                           this.ViewContext.RouteData.Values["action"].ToString(),
+                           this.ViewContext.RouteData.Values["controller"].ToString(),
+                           new { culture = "en" },
+                           null
+                        )
+                    </li>
                 </ul>
             </div>
         </div>
