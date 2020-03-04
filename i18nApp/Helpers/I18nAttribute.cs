@@ -25,8 +25,14 @@ namespace i18nApp.Helpers
                 var uriBuilder = new UriBuilder(requestUri);
 
                 // Change uri path.
-                // Default culture is ja.
-                uriBuilder.Path = "ja" + uriBuilder.Path;
+                // Default culture is ja. But if cookie has culture information, use it.
+                string initialDefaultCulture = "ja";
+                HttpCookie cookieCulture = filterContext.RequestContext.HttpContext.Request.Cookies["culture"];
+                if (cookieCulture != null && !string.IsNullOrEmpty(cookieCulture.Value))
+                {
+                    initialDefaultCulture = cookieCulture.Value;
+                }
+                uriBuilder.Path = initialDefaultCulture + uriBuilder.Path;
 
                 // Redirect to changed uri.
                 filterContext.Result = new RedirectResult(uriBuilder.ToString());
@@ -38,6 +44,15 @@ namespace i18nApp.Helpers
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(culture);
             // NOTE: CurrentUICulture is used to switch resources.
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
+
+            // I like to change language depending on the uri, so cookie is not required
+            // But storing culture in the cookie seems to be common. Try to implement.
+            // Store the culture in the cookie which is specified in the url.
+            var cookie = new HttpCookie("culture")
+            {
+                Value = culture
+            };
+            filterContext.HttpContext.Response.Cookies.Add(cookie);
         }
     }
 }
