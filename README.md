@@ -12,12 +12,12 @@ Internationalization application served by C# ASP.NET MVC on Azure and is deploy
 3. **/Home/Contact** that
     - is same as About page
 
-![](media/1.png)
+![1](https://user-images.githubusercontent.com/28250432/76743568-28890a80-67b6-11ea-9e49-a99e2c17897b.png)
 
-![](media/2.png)
+![2](https://user-images.githubusercontent.com/28250432/76743587-33dc3600-67b6-11ea-836d-ef1d24dbfb6d.png)
 
 ## Installation
 
 After cloning the repository, restore Nuget packages.
 
-![](media/restore-nuget-packages.png)
+![restore-nuget-packages](https://user-images.githubusercontent.com/28250432/76743594-36d72680-67b6-11ea-881e-4dea97a247fe.png)
