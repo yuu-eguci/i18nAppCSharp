@@ -8,6 +8,10 @@ using System.Globalization;
 
 namespace i18nApp.Helpers
 {
+    /// <summary>
+    /// This attribute changes Thread.CurrentThread.CurrentCulture
+    /// depending on the accessed URL on action executing.
+    /// </summary>
     public class I18nAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
