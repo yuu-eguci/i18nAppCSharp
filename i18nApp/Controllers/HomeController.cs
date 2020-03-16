@@ -11,8 +11,17 @@ namespace i18nApp.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Logger for this class.
+        /// </summary>
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(
+            // Name this logger with this class name.
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ActionResult Index()
         {
+            logger.Info($"Called method: {System.Reflection.MethodBase.GetCurrentMethod().Name}, Culture: {Thread.CurrentThread.CurrentCulture.Name}");
+
             return View();
         }
 
@@ -27,6 +36,8 @@ namespace i18nApp.Controllers
         [I18nAttribute]
         public ActionResult About(string culture)
         {
+            logger.Info($"Called method: {System.Reflection.MethodBase.GetCurrentMethod().Name}, Culture: {Thread.CurrentThread.CurrentCulture.Name}");
+
             return View();
         }
 
@@ -38,6 +49,8 @@ namespace i18nApp.Controllers
         [I18nAttribute]
         public ActionResult Contact(string culture)
         {
+            logger.Info($"Called method: {System.Reflection.MethodBase.GetCurrentMethod().Name}, Culture: {Thread.CurrentThread.CurrentCulture.Name}");
+
             return View();
         }
     }
