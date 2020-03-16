@@ -33,3 +33,9 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+#if DEBUG
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Log4net.Debug.xml", Watch = true)]
+#else
+[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Log4net.Release.xml", Watch = true)]
+#endif
