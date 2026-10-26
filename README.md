@@ -52,6 +52,16 @@ vstest.console i18nApp.Tests\bin\Release\i18nApp.Tests.dll
 
 `PrecompileBeforePublish` compiles the Razor views as well, so view errors fail the build. `DeployOnBuild` only creates a local Web Deploy package in `i18nApp\obj\Release\Package`; nothing is deployed.
 
+## Lint
+
+C# whitespace follows [`.editorconfig`](.editorconfig). This check does not load the projects, so it runs on any OS with the .NET SDK:
+
+```powershell
+dotnet format whitespace . --folder --verify-no-changes
+```
+
+Run it without `--verify-no-changes` to fix the files. The build in CI also uses `-warnaserror`, so compiler and MSBuild warnings fail it.
+
 ## Smoke test
 
 [`scripts/smoke-test.ps1`](scripts/smoke-test.ps1) checks a running site over HTTP: the Accept-Language switch on /Home/Index, the /ja and /en pages, the redirect from /Home/About and the attributes of the `culture` cookie. It works with Windows PowerShell 5.1 and PowerShell 7.
@@ -70,4 +80,4 @@ Bootstrap stays at 3.4.1, the last 3.x release, because Bootstrap 4/5 would mean
 
 ## CI
 
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the commands above on a GitHub-hosted Windows runner for pushes to `master` and for pull requests. It then installs IIS on that disposable runner, hosts the precompiled package at `http://localhost:8080` and runs the smoke test against it. It uses no secrets and has no deploy step.
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs for pushes to `master` and for pull requests. A Linux job runs the lint. A Windows job runs the build and test commands above, then installs IIS on that disposable runner, hosts the precompiled package at `http://localhost:8080` and runs the smoke test against it. It uses no secrets and has no deploy step.

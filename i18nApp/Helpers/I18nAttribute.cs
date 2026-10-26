@@ -27,7 +27,7 @@ namespace i18nApp.Helpers
             // filterContext.ActionParameters["culture"]
             // filterContext.HttpContext.Request.QueryString["key"]
 
-            // Redirect to /{culture}/{controller}/{action} when request is /{controller}/{action} 
+            // Redirect to /{culture}/{controller}/{action} when request is /{controller}/{action}
             if (!(filterContext.ActionParameters["culture"] is string culture))  // Means that if culture is null...
             {
                 // Original request uri.

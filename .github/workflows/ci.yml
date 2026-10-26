@@ -19,6 +19,18 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  # dotnet format in --folder mode does not load the projects, so it runs on Linux.
+  lint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check C# whitespace
+        run: dotnet format whitespace . --folder --verify-no-changes
+
   build-and-test:
     runs-on: windows-2025
     timeout-minutes: 20
@@ -42,7 +54,7 @@ jobs:
       # PrecompileBeforePublish compiles the Razor views too.
       # The Web Deploy package stays in obj\Release\Package on the runner and is not uploaded.
       - name: Build
-        run: msbuild i18nApp.sln /m /nologo /p:Configuration=Release /p:DeployOnBuild=true /p:PrecompileBeforePublish=true
+        run: msbuild i18nApp.sln /m /nologo -warnaserror /p:Configuration=Release /p:DeployOnBuild=true /p:PrecompileBeforePublish=true
 
       - name: Test
         run: |
