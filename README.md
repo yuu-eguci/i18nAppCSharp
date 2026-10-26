@@ -25,7 +25,7 @@ It was originally served on Azure and deployed through Azure DevOps. That pipeli
 
 ## Security headers
 
-Responses do not say which ASP.NET, MVC or IIS feature versions run the site (`X-AspNet-Version`, `X-AspNetMvc-Version` and `X-Powered-By` are removed), and they carry `X-Content-Type-Options: nosniff` and `X-Frame-Options: SAMEORIGIN`. The headers are set in `Web.config` and `Global.asax.cs`.
+Responses no longer advertise the framework: `X-AspNet-Version`, `X-AspNetMvc-Version` and `X-Powered-By` are removed. They carry `X-Content-Type-Options: nosniff` and `X-Frame-Options: SAMEORIGIN`. This is set in `Web.config` and `Global.asax.cs`. The `Server` header comes from IIS and is left as is.
 
 ## Requirements
 
