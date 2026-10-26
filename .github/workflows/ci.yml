@@ -1,0 +1,46 @@
+name: CI
+
+# Build and test only. This workflow must never deploy anywhere.
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
+
+      - uses: NuGet/setup-nuget@fd55a6f3b34392fa83fde1454582407d8c714123 # v4.0
+
+      - name: Restore
+        run: nuget restore i18nApp.sln
+
+      # PrecompileBeforePublish compiles the Razor views too. FileSystem publish only writes to the runner.
+      - name: Build
+        run: >-
+          msbuild i18nApp.sln /m /nologo
+          /p:Configuration=Release
+          /p:DeployOnBuild=true
+          /p:WebPublishMethod=FileSystem
+          /p:PublishUrl="$env:RUNNER_TEMP\publish"
+          /p:PrecompileBeforePublish=true
+
+      - name: Test
+        run: |
+          $vstest = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -find "**\vstest.console.exe" | Select-Object -First 1
+          & $vstest i18nApp.Tests\bin\Release\i18nApp.Tests.dll
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
