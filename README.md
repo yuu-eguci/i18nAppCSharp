@@ -38,15 +38,15 @@ Then run the `i18nApp` project with IIS Express from Visual Studio.
 
 ## Build and test from the command line
 
-Run these in a Developer PowerShell for Visual Studio:
+Run these in a Developer PowerShell for Visual Studio, with [`nuget.exe`](https://www.nuget.org/downloads) on `PATH`:
 
 ```powershell
 nuget restore i18nApp.sln
-msbuild i18nApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:PublishUrl="$PWD\publish" /p:PrecompileBeforePublish=true
+msbuild i18nApp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PrecompileBeforePublish=true
 vstest.console i18nApp.Tests\bin\Release\i18nApp.Tests.dll
 ```
 
-`PrecompileBeforePublish` compiles the Razor views as well, so view errors fail the build. The published site is written to the local `publish` folder only.
+`PrecompileBeforePublish` compiles the Razor views as well, so view errors fail the build. `DeployOnBuild` only creates a local Web Deploy package in `i18nApp\obj\Release\Package`; nothing is deployed.
 
 ## CI
 

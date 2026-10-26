@@ -29,15 +29,10 @@ jobs:
       - name: Restore
         run: nuget restore i18nApp.sln
 
-      # PrecompileBeforePublish compiles the Razor views too. FileSystem publish only writes to the runner.
+      # PrecompileBeforePublish compiles the Razor views too.
+      # The Web Deploy package stays in obj\Release\Package on the runner and is not uploaded.
       - name: Build
-        run: >-
-          msbuild i18nApp.sln /m /nologo
-          /p:Configuration=Release
-          /p:DeployOnBuild=true
-          /p:WebPublishMethod=FileSystem
-          /p:PublishUrl="$env:RUNNER_TEMP\publish"
-          /p:PrecompileBeforePublish=true
+        run: msbuild i18nApp.sln /m /nologo /p:Configuration=Release /p:DeployOnBuild=true /p:PrecompileBeforePublish=true
 
       - name: Test
         run: |
