@@ -13,6 +13,9 @@ It was originally served on Azure and deployed through Azure DevOps. That pipeli
 2. **/Home/About** that
     1. switches its language depending on its URL such as /ja/Home/About and /en/Home/About
     2. redirects to /{default culture}/Home/About automatically
+        - The default culture is `ja`, or the culture saved in the `culture` cookie when it is a supported one (`ja` or `en`). Any other cookie value is ignored.
+        - The redirect is a relative path, so the request's Host header is never echoed back.
+    3. saves the culture of the URL in the `culture` cookie (HttpOnly, SameSite=Lax, and Secure over HTTPS)
 3. **/Home/Contact** that
     - is same as About page
 
