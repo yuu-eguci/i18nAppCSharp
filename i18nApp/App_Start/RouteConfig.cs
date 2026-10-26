@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using i18nApp.Helpers;
 
 namespace i18nApp
 {
@@ -17,7 +18,7 @@ namespace i18nApp
                 name: "I18n",
                 url: "{culture}/{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, culture = "ja" },
-                constraints: new { culture = "ja|en" }
+                constraints: new { culture = string.Join("|", I18nAttribute.SupportedCultures) }
             );
 
             routes.MapRoute(

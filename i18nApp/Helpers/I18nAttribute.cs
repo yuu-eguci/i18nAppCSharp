@@ -14,6 +14,12 @@ namespace i18nApp.Helpers
     /// </summary>
     public class I18nAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// Cultures this app serves. RouteConfig limits {culture} in the url to these.
+        /// The first one is the default.
+        /// </summary>
+        public static readonly string[] SupportedCultures = { "ja", "en" };
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             // NOTE:
@@ -26,20 +32,21 @@ namespace i18nApp.Helpers
             {
                 // Original request uri.
                 Uri requestUri = filterContext.HttpContext.Request.Url;
-                var uriBuilder = new UriBuilder(requestUri);
 
                 // Change uri path.
-                // Default culture is ja. But if cookie has culture information, use it.
-                string initialDefaultCulture = "ja";
+                // Default culture is ja. But if cookie has supported culture information, use it.
+                // The cookie is client input, so any other value is ignored.
+                string initialDefaultCulture = SupportedCultures[0];
                 HttpCookie cookieCulture = filterContext.RequestContext.HttpContext.Request.Cookies["culture"];
-                if (cookieCulture != null && !string.IsNullOrEmpty(cookieCulture.Value))
+                if (cookieCulture != null)
                 {
-                    initialDefaultCulture = cookieCulture.Value;
+                    initialDefaultCulture = SupportedCultures.FirstOrDefault(
+                        c => string.Equals(c, cookieCulture.Value, StringComparison.OrdinalIgnoreCase)) ?? initialDefaultCulture;
                 }
-                uriBuilder.Path = initialDefaultCulture + uriBuilder.Path;
 
                 // Redirect to changed uri.
-                filterContext.Result = new RedirectResult(uriBuilder.ToString());
+                // Relative path, so that the Host header of the request is not echoed back.
+                filterContext.Result = new RedirectResult("/" + initialDefaultCulture + requestUri.PathAndQuery);
                 return;
             }
 
@@ -52,9 +59,13 @@ namespace i18nApp.Helpers
             // I like to change language depending on the uri, so cookie is not required
             // But storing culture in the cookie seems to be common. Try to implement.
             // Store the culture in the cookie which is specified in the url.
+            // Scripts don't need it, and it is sent only to this site's own navigation.
             var cookie = new HttpCookie("culture")
             {
-                Value = culture
+                Value = culture,
+                HttpOnly = true,
+                SameSite = SameSiteMode.Lax,
+                Secure = filterContext.HttpContext.Request.IsSecureConnection
             };
             filterContext.HttpContext.Response.Cookies.Add(cookie);
         }
