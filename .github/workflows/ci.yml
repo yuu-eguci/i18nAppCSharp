@@ -44,3 +44,18 @@ jobs:
           $vstest = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -find "**\vstest.console.exe" | Select-Object -First 1
           & $vstest i18nApp.Tests\bin\Release\i18nApp.Tests.dll
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      # The runner is disposable, so installing IIS here does not touch any shared host.
+      - name: Host in IIS
+        run: |
+          Install-WindowsFeature Web-Server, Web-Asp-Net45 | Out-Null
+          Copy-Item i18nApp\obj\Release\Package\PackageTmp C:\inetpub\i18nApp -Recurse
+          & "$env:windir\System32\inetsrv\appcmd.exe" add site /name:i18nApp /bindings:http/*:8080: /physicalPath:C:\inetpub\i18nApp
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Smoke test (PowerShell 7)
+        run: ./scripts/smoke-test.ps1 -BaseUrl http://localhost:8080
+
+      - name: Smoke test (Windows PowerShell 5.1)
+        shell: powershell
+        run: ./scripts/smoke-test.ps1 -BaseUrl http://localhost:8080
