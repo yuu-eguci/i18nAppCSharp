@@ -33,6 +33,7 @@ function Get-Page([string]$Path, [hashtable]$Headers = @{}) {
         $setCookie = ($values | Where-Object { $_ -like 'culture=*' }) -join '; '
     }
     [pscustomobject]@{
+        Headers   = $response.Headers
         Status    = [int]$response.StatusCode
         Location  = if ($response.Headers.Location) { $response.Headers.Location.OriginalString } else { $null }
         SetCookie = $setCookie
@@ -71,6 +72,14 @@ Assert-That ($page.SetCookie -match '^culture=ja;' -and $page.SetCookie -match '
 
 $page = Get-Page '/en/Home/Contact'
 Assert-That ($page.Status -eq 200 -and $page.Body.Contains('Contact page!')) '/en/Home/Contact is English'
+
+foreach ($name in 'X-AspNet-Version', 'X-AspNetMvc-Version', 'X-Powered-By') {
+    Assert-That (-not $page.Headers.Contains($name)) "$name header is not sent"
+}
+$values = $null
+Assert-That ($page.Headers.TryGetValues('X-Content-Type-Options', [ref]$values) -and ($values -join ',') -eq 'nosniff') 'X-Content-Type-Options is nosniff'
+$values = $null
+Assert-That ($page.Headers.TryGetValues('X-Frame-Options', [ref]$values) -and ($values -join ',') -eq 'SAMEORIGIN') 'X-Frame-Options is SAMEORIGIN'
 
 if ($script:failures -gt 0) {
     Write-Host "$($script:failures) check(s) failed."

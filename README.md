@@ -23,6 +23,10 @@ It was originally served on Azure and deployed through Azure DevOps. That pipeli
 
 ![2](https://user-images.githubusercontent.com/28250432/76743587-33dc3600-67b6-11ea-836d-ef1d24dbfb6d.png)
 
+## Security headers
+
+Responses no longer advertise the framework: `X-AspNet-Version`, `X-AspNetMvc-Version` and `X-Powered-By` are removed. They carry `X-Content-Type-Options: nosniff` and `X-Frame-Options: SAMEORIGIN`. This is set in `Web.config` and `Global.asax.cs`. The `Server` header comes from IIS and is left as is.
+
 ## Requirements
 
 - Windows
@@ -64,7 +68,7 @@ Run it without `--verify-no-changes` to fix the files. The build in CI also uses
 
 ## Smoke test
 
-[`scripts/smoke-test.ps1`](scripts/smoke-test.ps1) checks a running site over HTTP: the Accept-Language switch on /Home/Index, the /ja and /en pages, the redirect from /Home/About and the attributes of the `culture` cookie. It works with Windows PowerShell 5.1 and PowerShell 7.
+[`scripts/smoke-test.ps1`](scripts/smoke-test.ps1) checks a running site over HTTP: the Accept-Language switch on /Home/Index, the /ja and /en pages, the redirect from /Home/About, the attributes of the `culture` cookie and the security headers. It works with Windows PowerShell 5.1 and PowerShell 7.
 
 Start the `i18nApp` project with IIS Express from Visual Studio, then run:
 
