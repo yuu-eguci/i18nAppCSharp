@@ -12,6 +12,8 @@ namespace i18nApp
     {
         protected void Application_Start()
         {
+            // Don't tell clients which MVC version runs the site.
+            MvcHandler.DisableMvcResponseHeader = true;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
