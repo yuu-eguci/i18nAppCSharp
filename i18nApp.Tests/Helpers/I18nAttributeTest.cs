@@ -52,6 +52,17 @@ namespace i18nApp.Tests.Helpers
         }
 
         [TestMethod]
+        public void NormalizesCultureInCookie()
+        {
+            // Route constraints ignore case, so /EN/Home/About can store "EN" in the cookie.
+            var context = CreateContext("http://localhost/Home/About", culture: null, cookieCulture: "EN");
+
+            new I18nAttribute().OnActionExecuting(context);
+
+            Assert.AreEqual("/en/Home/About", ((RedirectResult)context.Result).Url);
+        }
+
+        [TestMethod]
         public void IgnoresUnsupportedCultureInCookie()
         {
             var context = CreateContext("http://localhost/Home/About", culture: null, cookieCulture: "evil.example");
