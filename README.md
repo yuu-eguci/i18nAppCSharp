@@ -28,6 +28,7 @@ It was originally served on Azure and deployed through Azure DevOps. That pipeli
 - Windows
 - Visual Studio 2022 or later (or Build Tools) with the ASP.NET and web development workload
 - .NET Framework 4.8 targeting pack
+- .NET SDK, for the SDK-style test project (Visual Studio includes it)
 
 This is a .NET Framework / System.Web application, so it does not build or run on macOS or Linux.
 
