@@ -51,6 +51,16 @@ vstest.console i18nApp.Tests\bin\Release\i18nApp.Tests.dll
 
 `PrecompileBeforePublish` compiles the Razor views as well, so view errors fail the build. `DeployOnBuild` only creates a local Web Deploy package in `i18nApp\obj\Release\Package`; nothing is deployed.
 
+## Smoke test
+
+[`scripts/smoke-test.ps1`](scripts/smoke-test.ps1) checks a running site over HTTP: the Accept-Language switch on /Home/Index, the /ja and /en pages, the redirect from /Home/About and the attributes of the `culture` cookie. It works with Windows PowerShell 5.1 and PowerShell 7.
+
+Start the `i18nApp` project with IIS Express from Visual Studio, then run:
+
+```powershell
+.\scripts\smoke-test.ps1 -BaseUrl https://localhost:44322
+```
+
 ## Dependencies
 
 Packages are managed with `packages.config`. `nuget restore` should report no known-vulnerability warnings (NU1901-NU1904).
@@ -59,4 +69,4 @@ Bootstrap stays at 3.4.1, the last 3.x release, because Bootstrap 4/5 would mean
 
 ## CI
 
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the commands above on a GitHub-hosted Windows runner for pushes to `master` and for pull requests. It uses no secrets and has no deploy step.
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the commands above on a GitHub-hosted Windows runner for pushes to `master` and for pull requests. It then installs IIS on that disposable runner, hosts the precompiled package at `http://localhost:8080` and runs the smoke test against it. It uses no secrets and has no deploy step.
