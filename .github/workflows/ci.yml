@@ -26,8 +26,13 @@ jobs:
 
       - uses: NuGet/setup-nuget@fd55a6f3b34392fa83fde1454582407d8c714123 # v4.0
 
+      # Fail on NuGet audit warnings for packages with known vulnerabilities.
       - name: Restore
-        run: nuget restore i18nApp.sln
+        run: |
+          $log = nuget restore i18nApp.sln 2>&1 | Out-String
+          Write-Output $log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ($log -match 'NU190[1-4]') { Write-Error 'Packages with known vulnerabilities were found.'; exit 1 }
 
       # PrecompileBeforePublish compiles the Razor views too.
       # The Web Deploy package stays in obj\Release\Package on the runner and is not uploaded.

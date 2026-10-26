@@ -51,6 +51,12 @@ vstest.console i18nApp.Tests\bin\Release\i18nApp.Tests.dll
 
 `PrecompileBeforePublish` compiles the Razor views as well, so view errors fail the build. `DeployOnBuild` only creates a local Web Deploy package in `i18nApp\obj\Release\Package`; nothing is deployed.
 
+## Dependencies
+
+Packages are managed with `packages.config`. `nuget restore` should report no known-vulnerability warnings (NU1901-NU1904).
+
+Bootstrap stays at 3.4.1, the last 3.x release, because Bootstrap 4/5 would mean rewriting the layout. Bootstrap 3 is end of life and its carousel has an unfixed XSS (CVE-2024-6484); this sample does not use the carousel.
+
 ## CI
 
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs the commands above on a GitHub-hosted Windows runner for pushes to `master` and for pull requests. It uses no secrets and has no deploy step.
