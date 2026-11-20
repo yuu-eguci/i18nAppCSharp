@@ -61,3 +61,14 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# GitHub Linguist
+#
+# jQuery 3.7.1 slim build from the jQuery NuGet package (packages.config),
+# identical to https://code.jquery.com/jquery-3.7.1.slim.js. Linguist's
+# built-in vendor rules miss the ".slim" file name, so it was counted as
+# this repository's JavaScript. The other bundled scripts and styles are
+# already excluded by Linguist's own rules.
+###############################################################################
+i18nApp/Scripts/jquery-3.7.1.slim.js linguist-vendored
